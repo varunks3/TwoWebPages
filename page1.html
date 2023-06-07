@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page 1</title>
+  <style>
+    /* Add some basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+    }
+    
+    .checkbox-container input[type="checkbox"] {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Page 1</h1>
+  <form>
+    <div class="checkbox-container">
+      <input type="checkbox" id="checkbox1">
+      <label for="textbox1">Textbox 1</label>
+    </div>
+    <input type="text" id="textbox1">
+    <br>
+    <div class="checkbox-container">
+      <input type="checkbox" id="checkbox2">
+      <label for="textbox2">Textbox 2</label>
+    </div>
+    <input type="text" id="textbox2">
+    <br>
+    <div class="checkbox-container">
+      <input type="checkbox" id="checkbox3">
+      <label for="textbox3">Textbox 3</label>
+    </div>
+    <input type="text" id="textbox3">
+    <br>
+    <!-- Add more checkboxes and textboxes as needed -->
+  </form>
+
+  <script>
+    // Optional: Add event listeners to capture checkbox and textbox state changes
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', updatePage2);
+    });
+
+    const textboxes = document.querySelectorAll('input[type="text"]');
+    textboxes.forEach(textbox => {
+      textbox.addEventListener('input', updatePage2);
+    });
+
+    function updatePage2() {
+      const data = [];
+      textboxes.forEach((textbox, index) => {
+        if (checkboxes[index].checked) {
+          data.push(textbox.value);
+        }
+      });
+
+      // Send data to page 2 in real-time
+      const url = 'http://localhost:8080/page2.html?data=' + encodeURIComponent(JSON.stringify(data));
+      const page2 = window.open(url, 'Page 2');
+      page2.focus();
+    }
+  </script>
+</body>
+</html>

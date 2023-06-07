@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page 2</title>
+  <style>
+    /* Add some basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Page 2</h1>
+  <ol id="data-list"></ol>
+
+  <script>
+    // Function to parse query parameters
+    function getQueryParams(url) {
+      const params = {};
+      const paramString = url.split('?')[1];
+      if (paramString) {
+        const paramPairs = paramString.split('&');
+        paramPairs.forEach(pair => {
+          const [key, value] = pair.split('=');
+          params[key] = decodeURIComponent(value);
+        });
+      }
+      return params;
+    }
+
+    // Function to update the list with real-time data
+    function updateList(data) {
+      const dataList = document.getElementById('data-list');
+      dataList.innerHTML = '';
+
+      data.forEach((item, index) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `Textbox ${index + 1}: ${item}`;
+        dataList.appendChild(listItem);
+      });
+    }
+
+    // Get data from the query parameter and update the list
+    const queryParams = getQueryParams(window.location.href);
+    if (queryParams.data) {
+      const data = JSON.parse(queryParams.data);
+      updateList(data);
+    }
+  </script>
+</body>
+</html>
