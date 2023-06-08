@@ -2,76 +2,53 @@
 <html>
 <head>
   <title>Page 1</title>
-  <style>
-    /* Add some basic styling */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-    }
-    
-    label {
-      display: block;
-      margin-bottom: 10px;
-    }
-    
-    .checkbox-container {
-      display: flex;
-      align-items: center;
-    }
-    
-    .checkbox-container input[type="checkbox"] {
-      margin-right: 5px;
-    }
-  </style>
 </head>
 <body>
   <h1>Page 1</h1>
-  <form>
-    <div class="checkbox-container">
-      <input type="checkbox" id="checkbox1">
-      <label for="textbox1">Textbox 1</label>
-    </div>
-    <input type="text" id="textbox1">
-    <br>
-    <div class="checkbox-container">
-      <input type="checkbox" id="checkbox2">
-      <label for="textbox2">Textbox 2</label>
-    </div>
-    <input type="text" id="textbox2">
-    <br>
-    <div class="checkbox-container">
-      <input type="checkbox" id="checkbox3">
-      <label for="textbox3">Textbox 3</label>
-    </div>
-    <input type="text" id="textbox3">
-    <br>
-    <!-- Add more checkboxes and textboxes as needed -->
-  </form>
+  
+  <div class="inputContainer">
+    <input type="checkbox" class="checkbox" id="checkbox1" onclick="syncText(1)">
+    <input type="text" id="textInput1" oninput="syncText(1)">
+  </div>
+
+  <div class="inputContainer">
+    <input type="checkbox" class="checkbox" id="checkbox2" onclick="syncText(2)">
+    <input type="text" id="textInput2" oninput="syncText(2)">
+  </div>
+
+  <div class="inputContainer">
+    <input type="checkbox" class="checkbox" id="checkbox3" onclick="syncText(3)">
+    <input type="text" id="textInput3" oninput="syncText(3)">
+  </div>
+
+  <div class="inputContainer">
+    <input type="checkbox" class="checkbox" id="checkbox4" onclick="syncText(4)">
+    <input type="text" id="textInput4" oninput="syncText(4)">
+  </div>
+
+  <div class="inputContainer">
+    <input type="checkbox" class="checkbox" id="checkbox5" onclick="syncText(5)">
+    <input type="text" id="textInput5" oninput="syncText(5)">
+  </div>
+
+  <div class="inputContainer">
+    <input type="checkbox" class="checkbox" id="checkbox6" onclick="syncText(6)">
+    <input type="text" id="textInput6" oninput="syncText(6)">
+  </div>
+
+  <div class="inputContainer">
+    <input type="checkbox" class="checkbox" id="checkbox7" onclick="syncText(7)">
+    <input type="text" id="textInput7" oninput="syncText(7)">
+  </div>
+
 
   <script>
-    // Optional: Add event listeners to capture checkbox and textbox state changes
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', updatePage2);
-    });
-
-    const textboxes = document.querySelectorAll('input[type="text"]');
-    textboxes.forEach(textbox => {
-      textbox.addEventListener('input', updatePage2);
-    });
-
-    function updatePage2() {
-      const data = [];
-      textboxes.forEach((textbox, index) => {
-        if (checkboxes[index].checked) {
-          data.push(textbox.value);
-        }
-      });
-
-      // Send data to page 2 in real-time
-      const url = 'http://localhost:8080/page2.html?data=' + encodeURIComponent(JSON.stringify(data));
-      const page2 = window.open(url, 'Page 2');
-      page2.focus();
+    function syncText(textInputId) {
+      var textInput = document.getElementById("textInput" + textInputId).value;
+      localStorage.setItem("textInput" + textInputId, textInput);
+      
+      var checkbox = document.getElementById("checkbox" + textInputId);
+      localStorage.setItem("checkbox" + textInputId, checkbox.checked);
     }
   </script>
 </body>

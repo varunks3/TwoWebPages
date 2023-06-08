@@ -3,50 +3,46 @@
 <head>
   <title>Page 2</title>
   <style>
-    /* Add some basic styling */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
+    #displayText {
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
   <h1>Page 2</h1>
-  <ol id="data-list"></ol>
+  <div id="displayText1"></div>
+  <div id="displayText2"></div>
+  <div id="displayText3"></div>
+  <div id="displayText4"></div>
+  <div id="displayText5"></div>
+  <div id="displayText6"></div>
+  <div id="displayText7"></div>
 
   <script>
-    // Function to parse query parameters
-    function getQueryParams(url) {
-      const params = {};
-      const paramString = url.split('?')[1];
-      if (paramString) {
-        const paramPairs = paramString.split('&');
-        paramPairs.forEach(pair => {
-          const [key, value] = pair.split('=');
-          params[key] = decodeURIComponent(value);
-        });
+    // Clear local storage data
+    localStorage.clear();
+
+    function syncText(textInputId) {
+      var textInput = localStorage.getItem("textInput" + textInputId);
+      var checkboxChecked = localStorage.getItem("checkbox" + textInputId);
+      if (checkboxChecked === "true") {
+        document.getElementById("displayText" + textInputId).textContent =  textInputId + ": " + textInput;
+      } else {
+        document.getElementById("displayText" + textInputId).textContent = "";
       }
-      return params;
     }
 
-    // Function to update the list with real-time data
-    function updateList(data) {
-      const dataList = document.getElementById('data-list');
-      dataList.innerHTML = '';
-
-      data.forEach((item, index) => {
-        const listItem = document.createElement('li');
-        listItem.textContent = `Textbox ${index + 1}: ${item}`;
-        dataList.appendChild(listItem);
-      });
+    // Initial synchronization on page load
+    for (var i = 1; i <= 7; i++) {
+      syncText(i);
     }
 
-    // Get data from the query parameter and update the list
-    const queryParams = getQueryParams(window.location.href);
-    if (queryParams.data) {
-      const data = JSON.parse(queryParams.data);
-      updateList(data);
-    }
+    // Continuously sync the text every second
+    setInterval(function() {
+      for (var i = 1; i <= 7; i++) {
+        syncText(i);
+      }
+    }, 100);
   </script>
 </body>
 </html>
